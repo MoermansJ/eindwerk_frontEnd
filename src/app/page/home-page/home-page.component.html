@@ -1,1 +1,9 @@
-<p>home-page works!</p>
+<p>home page</p>
+
+<div class="game">
+	<div *ngFor="let column of game" class="game-column">
+		<div *ngFor="let row of column" class="game-row">| {{ row }} |</div>
+	</div>
+</div>
+
+<div>{{ frameCounter }}</div>
