@@ -19,7 +19,7 @@ export class HomePageComponent implements OnDestroy {
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
     const key = event.key.toLocaleUpperCase();
-    this.getGame(false, key);
+    this.getGameState(false, key);
   }
 
   gameLoop(): void {
@@ -28,14 +28,14 @@ export class HomePageComponent implements OnDestroy {
 
       if (this.gameCounter % 60 === 0) {
         this.frameCounter++;
-        this.getGame(true, 'NO_KEY');
+        this.getGameState(true, 'NO_KEY');
       }
 
       this.gameLoop();
     });
   }
 
-  private getGame(computerMove: boolean, userMove: string): void {
+  private getGameState(computerMove: boolean, userMove: string): void {
     const url = 'http://localhost:8080/game/getGameState';
     this.http
       .post(url, { computerMove: computerMove, key: userMove })

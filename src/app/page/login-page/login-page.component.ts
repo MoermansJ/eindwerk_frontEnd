@@ -21,7 +21,10 @@ export class LoginPageComponent {
         password: this.password,
       })
       .subscribe({
-        next: (response: any) => console.log(response),
+        next: (response: any) => {
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('username', response.username);
+        },
         error: (error: HttpErrorResponse) => (this.result = error.error),
       });
   }
