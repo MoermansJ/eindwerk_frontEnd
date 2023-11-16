@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,19 +12,21 @@ export class LoginPageComponent {
   public password: string = '';
   public result: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private data: DataService) {}
 
-  public login(): void {
+  public login(username: string, password: string): void {
     const url = 'http://localhost:8080/auth/login';
     this.http
       .post(url, {
-        username: this.username,
-        password: this.password,
+        username: username,
+        password: password,
       })
       .subscribe({
         next: (response: any) => {
           localStorage.setItem('token', response.token);
           localStorage.setItem('username', response.username);
+          this.result = `Successfully logged in ${response.username}.`;
+          this.data.setUser(response.username);
         },
         error: (error: HttpErrorResponse) => (this.result = error.error),
       });

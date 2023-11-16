@@ -13,15 +13,17 @@ export class RegisterPageComponent {
 
   constructor(private http: HttpClient) {}
 
-  public register(): void {
+  public register(username: string, password: string): void {
     const url = 'http://localhost:8080/auth/register';
     this.http
       .post(url, {
-        username: this.username,
-        password: this.password,
+        username: username,
+        password: password,
       })
       .subscribe({
-        next: (response: any) => console.log(response),
+        next: (response: any) => {
+          this.result = `Successfully registered ${response.username}.`;
+        },
         error: (error: HttpErrorResponse) => (this.result = error.error),
       });
   }

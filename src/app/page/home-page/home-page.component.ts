@@ -28,7 +28,7 @@ export class HomePageComponent implements OnDestroy {
 
       if (this.gameCounter % 60 === 0) {
         this.frameCounter++;
-        this.getGameState(true, 'NO_KEY');
+        // this.getGameState(true, 'NO_KEY');
       }
 
       this.gameLoop();
