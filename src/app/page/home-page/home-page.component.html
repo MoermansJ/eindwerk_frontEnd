@@ -1,9 +1,12 @@
-<p>home page</p>
+<div id="game">
 
-<div class="game">
-	<div *ngFor="let column of game" class="game-column">
-		<div *ngFor="let row of column" class="game-row">| {{ row }} |</div>
+	<div class="tile-grid">
+		<div *ngFor="let tile of tileMap.tiles" [style.grid-column]="tile.x + 1" [style.grid-row]="tile.y + 1">
+			<!-- that +1 is very important, because the index is 0 but css grid starts from 1 -->
+			{{ tile.content }}
+		</div>
 	</div>
-</div>
 
-<div>{{ frameCounter }}</div>
+	<div>{{ frameCounter }}</div>
+
+</div>

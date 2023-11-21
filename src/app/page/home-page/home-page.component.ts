@@ -1,5 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, NgZone, OnDestroy } from '@angular/core';
+import { GameState } from 'src/app/interface/GameState';
+import { Tile } from 'src/app/interface/Tile';
+import { TileMap } from 'src/app/interface/TileMap';
 
 @Component({
   selector: 'app-home-page',
@@ -7,7 +10,8 @@ import { Component, HostListener, NgZone, OnDestroy } from '@angular/core';
   styleUrls: ['./home-page.component.sass'],
 })
 export class HomePageComponent implements OnDestroy {
-  public game: any;
+  private gameState: GameState = {} as GameState;
+  public tileMap: TileMap = {} as TileMap;
   public gameCounter: number = 0;
   public frameCounter: number = 0;
   private animationFrameId: number = 0;
@@ -28,7 +32,7 @@ export class HomePageComponent implements OnDestroy {
 
       if (this.gameCounter % 60 === 0) {
         this.frameCounter++;
-        // this.getGameState(true, 'NO_KEY');
+        this.getGameState(true, 'NO_KEY');
       }
 
       this.gameLoop();
@@ -40,9 +44,14 @@ export class HomePageComponent implements OnDestroy {
     this.http
       .post(url, { computerMove: computerMove, key: userMove })
       .subscribe({
-        next: (response: any) => (this.game = response),
+        next: (response) => this.setGameState(response as GameState),
         error: (error: HttpErrorResponse) => console.log(error.message),
       });
+  }
+
+  private setGameState(gameState: GameState): void {
+    this.gameState = gameState;
+    this.tileMap = gameState.tileMap;
   }
 
   ngOnDestroy(): void {
