@@ -3,6 +3,7 @@ import { Component, HostListener, NgZone, OnDestroy } from '@angular/core';
 import { GameState } from 'src/app/interface/GameState';
 import { Tile } from 'src/app/interface/Tile';
 import { TileMap } from 'src/app/interface/TileMap';
+import { CookieService } from 'src/app/service/cookie.service';
 
 @Component({
   selector: 'app-home-page',
@@ -16,7 +17,7 @@ export class HomePageComponent implements OnDestroy {
   public frameCounter: number = 0;
   private animationFrameId: number = 0;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public cookieService: CookieService) {
     this.gameLoop();
   }
 
