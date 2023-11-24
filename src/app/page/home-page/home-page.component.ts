@@ -33,7 +33,7 @@ export class HomePageComponent implements OnDestroy {
 
       if (this.gameCounter % 60 === 0) {
         this.frameCounter++;
-        // this.getGameState(true, 'NO_KEY');
+        this.getGameState(true, 'NO_KEY');
       }
 
       this.gameLoop();
@@ -42,8 +42,13 @@ export class HomePageComponent implements OnDestroy {
 
   private getGameState(computerMove: boolean, userMove: string): void {
     const url = 'http://localhost:8080/game/getGameState';
+    const sessionId = this.cookieService.getCookie('SESSION_ID');
     this.http
-      .post(url, { computerMove: computerMove, key: userMove })
+      .post(url, {
+        computerMove: computerMove,
+        key: userMove,
+        sessionId: sessionId,
+      })
       .subscribe({
         next: (response) => this.setGameState(response as GameState),
         error: (error: HttpErrorResponse) => console.log(error.message),
