@@ -20,7 +20,7 @@ export class CookiePopupComponent {
       next: (response: any) => {
         const sessionId = response['sessionId'];
         this.cookieService.setCookie('cookieConsent', 'true', 365);
-        this.cookieService.setCookie('SESSION_ID', sessionId, 365);
+        this.cookieService.setCookie('sessionId', sessionId, 365);
       },
       error: (error: HttpErrorResponse) => console.log(error.error),
     });

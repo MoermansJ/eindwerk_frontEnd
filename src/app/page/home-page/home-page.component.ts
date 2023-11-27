@@ -42,7 +42,7 @@ export class HomePageComponent implements OnDestroy {
 
   private getGameState(computerMove: boolean, userMove: string): void {
     const url = 'http://localhost:8080/game/getGameState';
-    const sessionId = this.cookieService.getCookie('SESSION_ID');
+    const sessionId = this.cookieService.getCookie('sessionId');
     this.http
       .post(url, {
         computerMove: computerMove,
