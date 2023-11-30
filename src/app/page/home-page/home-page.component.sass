@@ -1,18 +1,30 @@
+// Page
 #game
 	display: flex
 	justify-content: center
 
+
+// Tiles and grid
 .tile-grid
 	display: grid
+	grid-template-rows: row-reverse
 	border-bottom: 1px solid black
 	border-left: 1px solid black
 	border-right: 1px solid black
+	transform: scaleY(-1)
+	// display: flex
+	// flex-direction: column-reverse
+	// flex-wrap: wrap
+	// max-height: 130px
+
 
 .tile
 	width: 20px
 	height: 20px
 	border: 1px solid black
 
+
+// TetrisPiece classes
 .PieceI
 	background: cyan
 

@@ -1,6 +1,7 @@
+import { Point } from './Point';
+
 export interface Tile {
   id: number;
-  x: number;
-  y: number;
+  point: Point;
   content: string;
 }

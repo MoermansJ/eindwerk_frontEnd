@@ -5,4 +5,5 @@ export interface TileMap {
   width: number;
   height: number;
   tiles: Tile[];
+  linesCleared: number;
 }
