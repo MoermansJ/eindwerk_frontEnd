@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from 'src/app/service/data.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -12,7 +13,11 @@ export class LoginPageComponent {
   public password: string = '';
   public result: string = '';
 
-  constructor(private http: HttpClient, private data: DataService) {}
+  constructor(
+    private http: HttpClient,
+    private data: DataService,
+    private router: Router
+  ) {}
 
   public login(username: string, password: string): void {
     const url = 'http://localhost:8080/auth/login';
@@ -27,6 +32,7 @@ export class LoginPageComponent {
           localStorage.setItem('username', response.username);
           this.result = `Successfully logged in ${response.username}.`;
           this.data.setUser(response.username);
+          this.router.navigate(['game']);
         },
         error: (error: HttpErrorResponse) => (this.result = error.error),
       });

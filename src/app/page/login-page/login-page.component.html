@@ -2,6 +2,8 @@
 	Username: <input type="text" [(ngModel)]="username" />
 	<br />
 	Password: <input type="password" [(ngModel)]="password" />
-	<button (click)="login(username, password)">Sign in</button>
+	<p-button (click)="login(username, password)">Sign in</p-button>
 	{{result}}
+
+	<!-- <p-password [(ngModel)]="password"></p-password> -->
 </div>

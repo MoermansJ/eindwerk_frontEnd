@@ -1,18 +1,15 @@
 <app-cookie-popup *ngIf="!cookieService.getCookie('cookieConsent')" />
 
 <div id="game">
-
 	<div class="tile-grid">
 		<div *ngFor="let tile of tileMap.tiles" class="tile" [style.grid-column]="tile.point.x + 1" [style.grid-row]="tile.point.y + 1" [ngClass]="tile.content">
-			<!-- that +1 is very important, because the index is 0 but css grid starts from 1 -->
 		</div>
 	</div>
 
 	<div>
-		<div>{{ frameCounter }} frames</div>
+		<div>{{ frameCounter }} seconds playing</div>
 		<div>{{ tileMap.linesCleared}} lines cleared</div>
 	</div>
 
+	<p-button (click)="activateGameLoop()"> {{isGameLoopActive ? "Pause" : "Play" }} </p-button>
 </div>
-
-<!--  NOTE TO SELF: The issue is in the FE, not in the BE. In particular it's the tile interface, which doesn't directly store the x and y as a number but rather a Point (which does hold the X and Y) -->

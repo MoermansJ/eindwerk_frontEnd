@@ -16,6 +16,7 @@ export class HomePageComponent implements OnDestroy {
   public gameCounter: number = 0;
   public frameCounter: number = 0;
   private animationFrameId: number = 0;
+  public isGameLoopActive: boolean = false;
 
   constructor(private http: HttpClient, public cookieService: CookieService) {
     this.gameLoop();
@@ -23,11 +24,15 @@ export class HomePageComponent implements OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
+    if (!this.isGameLoopActive) return;
+
     const key = event.key.toLocaleUpperCase();
     this.getGameState(false, key);
   }
 
-  gameLoop(): void {
+  private gameLoop(): void {
+    if (!this.isGameLoopActive) return;
+
     this.animationFrameId = requestAnimationFrame(() => {
       this.gameCounter++;
 
@@ -58,6 +63,14 @@ export class HomePageComponent implements OnDestroy {
   private setGameState(gameState: GameState): void {
     this.gameState = gameState;
     this.tileMap = gameState.tileMap;
+  }
+
+  public activateGameLoop(): void {
+    this.isGameLoopActive = !this.isGameLoopActive;
+
+    if (!this.isGameLoopActive) return;
+
+    this.gameLoop();
   }
 
   ngOnDestroy(): void {

@@ -1,7 +1,3 @@
 <nav>
-	<button routerLink="">Home</button>
-	<button routerLink="register">Register</button>
-	<button *ngIf="!user" routerLink="login">Log In</button>
-	<button *ngIf="user" (click)="logout()">Log Out</button>
-	<p *ngIf="user">USER: {{user}}</p>
+	<p-menubar [model]="items" />
 </nav>
