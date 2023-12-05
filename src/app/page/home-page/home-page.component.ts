@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, NgZone, OnDestroy } from '@angular/core';
 import { GameState } from 'src/app/interface/GameState';
-import { Tile } from 'src/app/interface/Tile';
 import { TileMap } from 'src/app/interface/TileMap';
 import { CookieService } from 'src/app/service/cookie.service';
 
@@ -41,13 +40,15 @@ export class HomePageComponent implements OnDestroy {
         this.getGameState(true, 'NO_KEY');
       }
 
+      cancelAnimationFrame(this.animationFrameId); // cancels the PREVIOUS frame
+
       this.gameLoop();
     });
   }
 
   private getGameState(computerMove: boolean, userMove: string): void {
     const url = 'http://localhost:8080/game/getGameState';
-    const sessionId = this.cookieService.getCookie('sessionId');
+    const sessionId = this.cookieService.getKey('sessionId');
     this.http
       .post(url, {
         computerMove: computerMove,
@@ -78,7 +79,18 @@ export class HomePageComponent implements OnDestroy {
   }
 
   public newGame(): void {
-    this.cookieService.deleteKeyFromCookie('sessionId');
-    this.getGameState(false, 'NO_KEY');
+    this.cookieService.deleteKey('sessionId');
+    this.getNewSessionId();
+    this.isGameLoopActive = true;
+    this.gameLoop();
+  }
+
+  private getNewSessionId(): void {
+    const url = `http://localhost:8080/auth/generateSessionId`;
+    this.http.get(url).subscribe({
+      next: (response: any) =>
+        this.cookieService.setKey('sessionId', response['sessionId']),
+      error: (error: HttpErrorResponse) => console.error(error.message),
+    });
   }
 }

@@ -7,17 +7,15 @@ import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 export class CookieService {
   constructor(private ngxCookieService: NgxCookieService) {}
 
-  public setCookie(key: string, value: string, days: number): void {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    this.ngxCookieService.set(key, value, date, '/');
+  public setKey(key: string, value: string, expirationTime?: number): void {
+    this.ngxCookieService.set(key, value, expirationTime, '/');
   }
 
-  public getCookie(name: string): string | null {
-    return this.ngxCookieService.get(name);
+  public getKey(key: string): string | null {
+    return this.ngxCookieService.get(key);
   }
 
-  public deleteKeyFromCookie(key: string): void {
+  public deleteKey(key: string): void {
     this.ngxCookieService.delete(key);
   }
 }

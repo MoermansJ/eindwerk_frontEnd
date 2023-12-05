@@ -1,4 +1,4 @@
-<app-cookie-popup *ngIf="!cookieService.getCookie('cookieConsent')" />
+<app-cookie-popup *ngIf="!cookieService.getKey('cookieConsent')" />
 
 <div id="game">
 	<div class="tile-grid">
@@ -12,5 +12,5 @@
 	</div>
 
 	<p-button (click)="toggleGameLoop()"> {{ isGameLoopActive ? "Pause" : "Resume" }} </p-button>
-	<p-button (click)="newGame()"> {{ isGameLoopActive ? "Quit Game" : "New Game" }} </p-button>
+	<p-button (click)="newGame()"> New Game </p-button>
 </div>

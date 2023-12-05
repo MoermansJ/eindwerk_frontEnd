@@ -14,15 +14,8 @@ import { CookieService } from 'src/app/service/cookie.service';
 export class CookiePopupComponent {
   constructor(private cookieService: CookieService, private http: HttpClient) {}
 
-  enableCookies(): void {
-    const url = `http://localhost:8080/auth/getSessionId`;
-    this.http.get(url).subscribe({
-      next: (response: any) => {
-        const sessionId = response['sessionId'];
-        this.cookieService.setCookie('cookieConsent', 'true', 365);
-        this.cookieService.setCookie('sessionId', sessionId, 365);
-      },
-      error: (error: HttpErrorResponse) => console.log(error.error),
-    });
+  public enableCookies(): void {
+    const expirationTime = 1000 * 60 * 60; // 1 hour
+    this.cookieService.setKey('cookieConsent', 'true', expirationTime);
   }
 }
