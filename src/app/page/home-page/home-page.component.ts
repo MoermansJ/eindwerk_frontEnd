@@ -65,7 +65,7 @@ export class HomePageComponent implements OnDestroy {
     this.tileMap = gameState.tileMap;
   }
 
-  public activateGameLoop(): void {
+  public toggleGameLoop(): void {
     this.isGameLoopActive = !this.isGameLoopActive;
 
     if (!this.isGameLoopActive) return;
@@ -75,5 +75,10 @@ export class HomePageComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     cancelAnimationFrame(this.animationFrameId);
+  }
+
+  public newGame(): void {
+    this.cookieService.deleteKeyFromCookie('sessionId');
+    this.getGameState(false, 'NO_KEY');
   }
 }

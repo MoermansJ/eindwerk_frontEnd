@@ -14,22 +14,27 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient, private data: DataService) {}
 
   ngOnInit(): void {
-    //logging in user based on localstorage credentials
+    this.getUserFromLocalStorageCredentials();
+  }
+
+  private getUserFromLocalStorageCredentials(): void {
     const lsUsername = localStorage.getItem('username') as string;
     const lsToken = localStorage.getItem('token') as string;
-
-    const authToken: AuthTokenDTO = { username: lsUsername, token: lsToken };
+    const authToken = { username: lsUsername, token: lsToken } as AuthTokenDTO;
 
     if (!lsToken || !lsUsername) {
       localStorage.clear();
       return;
     }
 
+    this.validateToken(authToken);
+  }
+
+  private validateToken(authToken: AuthTokenDTO) {
     const url = 'http://localhost:8080/auth/validateToken';
     this.http.post(url, authToken).subscribe({
       next: (response: any) => {
-        console.log('Token validated - REMOVE THIS CLG', response);
-        this.data.setUser(lsUsername);
+        this.data.setUser(authToken.username);
       },
       error: (error: HttpErrorResponse) => {
         console.log('Token validation failed - log in again');

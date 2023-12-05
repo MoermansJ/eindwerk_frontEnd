@@ -11,5 +11,6 @@
 		<div>{{ tileMap.linesCleared}} lines cleared</div>
 	</div>
 
-	<p-button (click)="activateGameLoop()"> {{isGameLoopActive ? "Pause" : "Play" }} </p-button>
+	<p-button (click)="toggleGameLoop()"> {{ isGameLoopActive ? "Pause" : "Resume" }} </p-button>
+	<p-button (click)="newGame()"> {{ isGameLoopActive ? "Quit Game" : "New Game" }} </p-button>
 </div>
