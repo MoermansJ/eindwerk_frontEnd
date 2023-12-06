@@ -1,4 +1,4 @@
-<app-cookie-popup *ngIf="!cookieService.getKey('cookieConsent')" />
+<app-cookie-popup *ngIf="!cookieService.get('cookieConsent')" />
 
 <div id="game">
 	<div class="tile-grid">
@@ -7,8 +7,8 @@
 	</div>
 
 	<div>
-		<div>{{ frameCounter }} seconds playing</div>
-		<div>{{ tileMap.linesCleared}} lines cleared</div>
+		<div> {{ frameCounter }} seconds playing</div>
+		<div> {{ tileMap.linesCleared }} lines cleared</div>
 	</div>
 
 	<p-button (click)="toggleGameLoop()"> {{ isGameLoopActive ? "Pause" : "Resume" }} </p-button>

@@ -1,10 +1,5 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpResponse,
-} from '@angular/common/http';
 import { Component } from '@angular/core';
-import { CookieService } from 'src/app/service/cookie.service';
+import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-cookie-popup',
@@ -12,10 +7,10 @@ import { CookieService } from 'src/app/service/cookie.service';
   styleUrls: ['./cookie-popup.component.sass'],
 })
 export class CookiePopupComponent {
-  constructor(private cookieService: CookieService, private http: HttpClient) {}
+  constructor(private cookieService: NgxCookieService) {}
 
   public enableCookies(): void {
     const expirationTime = 1000 * 60 * 60; // 1 hour
-    this.cookieService.setKey('cookieConsent', 'true', expirationTime);
+    this.cookieService.set('cookieConsent', 'true', expirationTime);
   }
 }

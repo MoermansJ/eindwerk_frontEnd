@@ -14,6 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { MenubarModule } from 'primeng/menubar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { PasswordModule } from 'primeng/password';
+import { PanelMenuModule } from 'primeng/panelmenu';
 import { AccountPageComponent } from './page/account-page/account-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,6 +38,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MenubarModule,
     SplitButtonModule,
     PasswordModule,
+    PanelMenuModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

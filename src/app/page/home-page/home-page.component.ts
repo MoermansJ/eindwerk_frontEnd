@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, NgZone, OnDestroy } from '@angular/core';
 import { GameState } from 'src/app/interface/GameState';
 import { TileMap } from 'src/app/interface/TileMap';
-import { CookieService } from 'src/app/service/cookie.service';
+import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home-page',
@@ -17,7 +17,10 @@ export class HomePageComponent implements OnDestroy {
   private animationFrameId: number = 0;
   public isGameLoopActive: boolean = false;
 
-  constructor(private http: HttpClient, public cookieService: CookieService) {
+  constructor(
+    private http: HttpClient,
+    public cookieService: NgxCookieService
+  ) {
     this.gameLoop();
   }
 
@@ -48,12 +51,14 @@ export class HomePageComponent implements OnDestroy {
 
   private getGameState(computerMove: boolean, userMove: string): void {
     const url = 'http://localhost:8080/game/getGameState';
-    const sessionId = this.cookieService.getKey('sessionId');
+    const sessionId = this.cookieService.get('sessionId');
+    const userId = this.gameState.userid;
     this.http
       .post(url, {
         computerMove: computerMove,
         key: userMove,
         sessionId: sessionId,
+        userId: userId,
       })
       .subscribe({
         next: (response) => this.setGameState(response as GameState),
@@ -79,7 +84,7 @@ export class HomePageComponent implements OnDestroy {
   }
 
   public newGame(): void {
-    this.cookieService.deleteKey('sessionId');
+    this.cookieService.delete('sessionId');
     this.getNewSessionId();
     this.isGameLoopActive = true;
     this.gameLoop();
@@ -89,7 +94,7 @@ export class HomePageComponent implements OnDestroy {
     const url = `http://localhost:8080/auth/generateSessionId`;
     this.http.get(url).subscribe({
       next: (response: any) =>
-        this.cookieService.setKey('sessionId', response['sessionId']),
+        this.cookieService.set('sessionId', response['sessionId']),
       error: (error: HttpErrorResponse) => console.error(error.message),
     });
   }

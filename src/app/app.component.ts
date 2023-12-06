@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
     const url = 'http://localhost:8080/auth/validateToken';
     this.http.post(url, authToken).subscribe({
       next: (response: any) => {
-        this.data.setUser(authToken.username);
+        this.data.setUser(response);
       },
       error: (error: HttpErrorResponse) => {
         console.log('Token validation failed - log in again');

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, PrimeIcons } from 'primeng/api';
+import { User } from 'src/app/interface/User';
 import { DataService } from 'src/app/service/data.service';
+import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,52 +11,51 @@ import { DataService } from 'src/app/service/data.service';
   styleUrls: ['./navbar.component.sass'],
 })
 export class NavbarComponent implements OnInit {
-  public user: string = '';
+  public user: User | null = null;
   public items: MenuItem[] = [];
 
-  constructor(private data: DataService, private router: Router) {}
+  constructor(
+    private data: DataService,
+    private router: Router,
+    private cookieService: NgxCookieService
+  ) {
+    this.initialiseMenuWithDefaultSettings();
+  }
 
   ngOnInit(): void {
-    this.data.getUser().subscribe((user: string) => {
+    this.data.getUser().subscribe((user: User | null) => {
       this.user = user;
-      this.initialiseMenu(user);
+      this.initialiseMenuWithDefaultSettings();
+      if (user !== null) {
+        this.addUserConfigurationToMenu();
+      }
     });
   }
 
   public logout(): void {
-    if (!this.user) return;
-    localStorage.clear();
-    this.data.setUser('');
-    this.router.navigate(['']);
-  }
-
-  private initialiseMenu(user: string): void {
+    this.cookieService.delete('sessionId');
+    this.data.setUser(null);
     this.initialiseMenuWithDefaultSettings();
-
-    if (!user) {
-      return;
-    }
-
-    this.initialiseMenuWithAccountOptions();
+    this.router.navigate(['']);
   }
 
   private initialiseMenuWithDefaultSettings(): void {
     this.items = [
       {
-        label: 'Game',
+        label: 'game',
         icon: 'pi pi-fw pi-box',
-        routerLink: '',
+        routerLink: '/',
       },
       {
-        label: 'Account',
+        label: 'account',
         icon: 'pi pi-fw pi-user',
         items: [
           {
-            label: 'Log in',
+            label: 'log in',
             routerLink: 'login',
           },
           {
-            label: 'Register',
+            label: 'register',
             routerLink: 'register',
           },
         ],
@@ -62,12 +63,11 @@ export class NavbarComponent implements OnInit {
     ];
   }
 
-  private initialiseMenuWithAccountOptions(): void {
-    this.items[1].label = this.user;
-
+  private addUserConfigurationToMenu(): void {
+    this.items[1].label = this.user?.username;
     this.items[1].items = [
       {
-        label: 'Log out',
+        label: 'log out',
         command: () => this.logout(),
       },
     ];

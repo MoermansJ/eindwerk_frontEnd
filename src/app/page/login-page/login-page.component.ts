@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { DataService } from 'src/app/service/data.service';
 import { Router } from '@angular/router';
+import { User } from 'src/app/interface/User';
 
 @Component({
   selector: 'app-login-page',
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-page.component.sass'],
 })
 export class LoginPageComponent {
+  private user: User | null = null;
   public username: string = '';
   public password: string = '';
   public result: string = '';
@@ -27,12 +29,12 @@ export class LoginPageComponent {
         password: password,
       })
       .subscribe({
-        next: (response: any) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('username', response.username);
-          this.result = `Successfully logged in ${response.username}.`;
-          this.data.setUser(response.username);
-          this.router.navigate(['game']);
+        next: (response) => {
+          const user = response as User;
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('username', user.username);
+          this.result = `Successfully logged in ${user.username}.`;
+          this.data.setUser(user);
         },
         error: (error: HttpErrorResponse) => (this.result = error.error),
       });

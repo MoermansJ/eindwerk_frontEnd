@@ -4,7 +4,7 @@ import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root',
 })
-export class CookieService {
+export class CustomCookieService {
   constructor(private ngxCookieService: NgxCookieService) {}
 
   public setKey(key: string, value: string, expirationTime?: number): void {

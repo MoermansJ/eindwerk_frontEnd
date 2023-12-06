@@ -6,7 +6,7 @@ import { HomePageComponent } from './page/home-page/home-page.component';
 import { AccountPageComponent } from './page/account-page/account-page.component';
 
 const routes: Routes = [
-  { path: 'game', component: HomePageComponent },
+  { path: '', component: HomePageComponent },
   { path: 'register', component: RegisterPageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'account', component: AccountPageComponent },
