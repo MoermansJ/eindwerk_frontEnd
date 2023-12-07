@@ -1,0 +1,18 @@
+<div id="game-page">
+	<div id="game">
+		<div id="game-display">
+			<div id="game-points"> {{ tileMap.linesCleared }} </div>
+
+			<div class="tile-grid">
+				<div *ngFor="let tile of tileMap.tiles" class="tile" [style.grid-column]="tile.point.x + 1" [style.grid-row]="tile.point.y + 1" [ngClass]="tile.content">
+				</div>
+			</div>
+		</div>
+
+		<div id="game-buttons">
+			<p-button (click)="toggleGameLoop()" [icon]="isGameLoopActive ? 'pi pi-pause' : 'pi pi-play'"></p-button>
+			<p-button (click)="newGame()" icon="pi pi-replay"> </p-button>
+		</div>
+
+	</div>
+</div>

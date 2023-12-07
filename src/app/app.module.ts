@@ -17,6 +17,8 @@ import { PasswordModule } from 'primeng/password';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { AccountPageComponent } from './page/account-page/account-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GamePageComponent } from './page/game-page/game-page.component';
+import { StyleClassModule } from 'primeng/styleclass';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterPageComponent,
     CookiePopupComponent,
     AccountPageComponent,
+    GamePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SplitButtonModule,
     PasswordModule,
     PanelMenuModule,
+    StyleClassModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

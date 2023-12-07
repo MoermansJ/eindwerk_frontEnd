@@ -33,6 +33,7 @@ export class NavbarComponent implements OnInit {
   }
 
   public logout(): void {
+    localStorage.clear();
     this.cookieService.delete('sessionId');
     this.data.setUser(null);
     this.initialiseMenuWithDefaultSettings();
@@ -42,9 +43,14 @@ export class NavbarComponent implements OnInit {
   private initialiseMenuWithDefaultSettings(): void {
     this.items = [
       {
+        label: 'home',
+        icon: 'pi pi-fw pi-home',
+        routerLink: '/',
+      },
+      {
         label: 'game',
         icon: 'pi pi-fw pi-box',
-        routerLink: '/',
+        routerLink: '/game',
       },
       {
         label: 'account',
@@ -64,8 +70,10 @@ export class NavbarComponent implements OnInit {
   }
 
   private addUserConfigurationToMenu(): void {
-    this.items[1].label = this.user?.username;
-    this.items[1].items = [
+    if (this.user == null) return;
+
+    this.items[2].label = this.user?.username;
+    this.items[2].items = [
       {
         label: 'log out',
         command: () => this.logout(),

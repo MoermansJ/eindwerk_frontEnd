@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthTokenDTO } from './interface/AuthTokenDTO';
 import { DataService } from './service/data.service';
+import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,11 @@ import { DataService } from './service/data.service';
 export class AppComponent implements OnInit {
   title = 'Eindwerk Jonathan Moermans';
 
-  constructor(private http: HttpClient, private data: DataService) {}
+  constructor(
+    private http: HttpClient,
+    private data: DataService,
+    protected cookieService: NgxCookieService
+  ) {}
 
   ngOnInit(): void {
     this.getUserFromLocalStorageCredentials();
