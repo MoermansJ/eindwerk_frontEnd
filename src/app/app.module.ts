@@ -15,10 +15,11 @@ import { MenubarModule } from 'primeng/menubar';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { PasswordModule } from 'primeng/password';
 import { PanelMenuModule } from 'primeng/panelmenu';
-import { AccountPageComponent } from './page/account-page/account-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GamePageComponent } from './page/game-page/game-page.component';
 import { StyleClassModule } from 'primeng/styleclass';
+import { ProfilePageComponent } from './page/profile-page/profile-page.component';
+import { LeaderboardPageComponent } from './page/leaderboard-page/leaderboard-page.component';
 
 @NgModule({
   declarations: [
@@ -28,8 +29,9 @@ import { StyleClassModule } from 'primeng/styleclass';
     LoginPageComponent,
     RegisterPageComponent,
     CookiePopupComponent,
-    AccountPageComponent,
     GamePageComponent,
+    ProfilePageComponent,
+    LeaderboardPageComponent,
   ],
   imports: [
     BrowserModule,

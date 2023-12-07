@@ -36,7 +36,7 @@ export class LoginPageComponent {
           this.result = `Successfully logged in ${user.username}.`;
           this.data.setUser(user);
         },
-        error: (error: HttpErrorResponse) => (this.result = error.error),
+        error: (error: HttpErrorResponse) => (this.result = error.message),
       });
   }
 }

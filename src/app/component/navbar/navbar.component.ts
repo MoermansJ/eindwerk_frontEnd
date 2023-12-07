@@ -50,20 +50,17 @@ export class NavbarComponent implements OnInit {
       {
         label: 'game',
         icon: 'pi pi-fw pi-box',
-        routerLink: '/game',
+        items: [
+          { label: 'play', routerLink: '/game' },
+          { label: 'leaderboard', routerLink: '/leaderboard' },
+        ],
       },
       {
         label: 'account',
         icon: 'pi pi-fw pi-user',
         items: [
-          {
-            label: 'log in',
-            routerLink: 'login',
-          },
-          {
-            label: 'register',
-            routerLink: 'register',
-          },
+          { label: 'log in', routerLink: 'login' },
+          { label: 'register', routerLink: 'register' },
         ],
       },
     ];
@@ -74,10 +71,8 @@ export class NavbarComponent implements OnInit {
 
     this.items[2].label = this.user?.username;
     this.items[2].items = [
-      {
-        label: 'log out',
-        command: () => this.logout(),
-      },
+      { label: 'profile', routerLink: '/profile' },
+      { label: 'log out', command: () => this.logout() },
     ];
   }
 }
