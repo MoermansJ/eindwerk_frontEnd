@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 import { HighScore } from 'src/app/interface/HighScore';
 
 @Component({
@@ -13,6 +14,10 @@ export class LeaderboardPageComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
+    this.fetchLeaderboard();
+  }
+
+  private fetchLeaderboard(): void {
     const url = 'http://localhost:8080/highscore/getTop10HighScores';
     this.http.get<HighScore[]>(url).subscribe({
       next: (response) => (this.leaderboard = response),

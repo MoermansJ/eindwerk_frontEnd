@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit {
         ],
       },
       {
-        label: 'account',
+        label: 'visitor',
         icon: 'pi pi-fw pi-user',
         items: [
           { label: 'log in', routerLink: 'login' },

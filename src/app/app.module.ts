@@ -20,6 +20,9 @@ import { GamePageComponent } from './page/game-page/game-page.component';
 import { StyleClassModule } from 'primeng/styleclass';
 import { ProfilePageComponent } from './page/profile-page/profile-page.component';
 import { LeaderboardPageComponent } from './page/leaderboard-page/leaderboard-page.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,9 @@ import { LeaderboardPageComponent } from './page/leaderboard-page/leaderboard-pa
     PasswordModule,
     PanelMenuModule,
     StyleClassModule,
+    BreadcrumbModule,
+    TableModule,
+    CardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

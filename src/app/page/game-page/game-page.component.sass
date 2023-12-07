@@ -2,37 +2,31 @@
 #game-page
 	display: flex
 	justify-content: center
-
-#game
-	display: flex
-	flex-direction: column
-	box-shadow: 0 2px 4px rgb(0, 0, 0)
-
+	height: calc(100vh - var(--navbarHeight))
 
 // Tiles and grid
 #game-display
 	display: flex
 	flex-direction: column
 	align-items: center
-	height: 600px
+	height: max-cont
 	width: 282px
-	border-bottom: 2px solid black
+	border-bottom: 1px solid black
+	height: 100%
 
 .tile-grid
 	display: grid
 	grid-template-rows: row-reverse
-	border-bottom: 1px solid black
-	border-left: 1px solid black
-	border-right: 1px solid black
 	transform: scaleY(-1)
 
 .tile
 	//TO DO: find better solution for scaling game display to screensize
 	height: 50vh
 	width: 50vw
-	max-width: 28px
-	max-height: 28px
+	max-width: 20px
+	max-height: 20px
 	border: 1px solid black
+	border-collapse: collapse
 
 #game-buttons
 	display: flex
