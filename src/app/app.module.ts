@@ -23,6 +23,7 @@ import { LeaderboardPageComponent } from './page/leaderboard-page/leaderboard-pa
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
+import { TetrisComponent } from './component/tetris/tetris.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { CardModule } from 'primeng/card';
     GamePageComponent,
     ProfilePageComponent,
     LeaderboardPageComponent,
+    TetrisComponent,
   ],
   imports: [
     BrowserModule,
