@@ -7,14 +7,14 @@ import { User } from '../interface/User';
 })
 export class DataService {
   //properties
-  private user = new BehaviorSubject<User | null>(null);
+  private user = new BehaviorSubject<User | undefined>(undefined);
 
   //getters & setters
-  public setUser(user: User | null): void {
+  public setUser(user: User | undefined): void {
     this.user.next(user);
   }
 
-  public getUser(): Observable<User | null> {
+  public getUser(): Observable<User | undefined> {
     return this.user.asObservable();
   }
 }

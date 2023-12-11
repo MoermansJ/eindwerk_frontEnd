@@ -1,13 +1,10 @@
 <div id="game-tetris">
-	<div>Tetris</div>
-	<div>{{ tileMap.linesCleared }}</div>
+	<h2>Tetris</h2>
+	<!-- <p-progressSpinner id="loadscreen"></p-progressSpinner> -->
 
-	<div id="game-gamestate-display">
-		<div *ngIf="showOverlay" id="game-overlay">
-			<p>You are currently not logged in.</p>
-			<p>Consider logging in if you want to save your score.</p>
-		</div>
+	<div *ngIf="tileMap">{{ tileMap.linesCleared }}</div>
 
+	<div *ngIf="tileMap" id="game-gamestate-display">
 		<div>
 			<div>
 				<div *ngFor="let tile of tileMap.tiles" class="tile" [style.grid-column]="tile.point.x + 1" [style.grid-row]="tile.point.y + 1" [ngClass]="tile.content"></div>

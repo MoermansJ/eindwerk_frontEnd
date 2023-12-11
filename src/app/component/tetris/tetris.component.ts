@@ -5,6 +5,7 @@ import { TileMap } from 'src/app/interface/TileMap';
 import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 import { DataService } from 'src/app/service/data.service';
 import { User } from 'src/app/interface/User';
+import { GameStateService } from 'src/app/service/game-state.service';
 
 @Component({
   selector: 'app-tetris',
@@ -23,28 +24,35 @@ export class TetrisComponent implements OnDestroy {
 
   constructor(
     private http: HttpClient,
-    public cookieService: NgxCookieService,
-    private data: DataService
+    private cookieService: NgxCookieService,
+    private data: DataService,
+    private gameStateService: GameStateService
   ) {
-    this.initialiseSubscriptions();
-    this.gameLoop();
+    this.subscribeToServices();
+    this.startGameLoop();
   }
 
-  private initialiseSubscriptions(): void {
+  private subscribeToServices(): void {
     this.data.getUser().subscribe({
       next: (user) => this.setUser(user as User),
+    });
+
+    this.gameStateService.getGameState().subscribe({
+      next: (gamestate) => {
+        this.gameState = gamestate as GameState;
+        this.tileMap = gamestate?.tileMap as TileMap;
+      },
     });
   }
 
   @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
+  public onKeyDown(event: KeyboardEvent): void {
     if (!this.isGameLoopActive) return;
-
     const key = event.key.toLocaleUpperCase();
-    this.getGameState(false, key);
+    this.gameStateService.doPlayerMove(key);
   }
 
-  private gameLoop(): void {
+  private startGameLoop(): void {
     if (!this.isGameLoopActive) return;
 
     this.animationFrameId = requestAnimationFrame(() => {
@@ -52,39 +60,17 @@ export class TetrisComponent implements OnDestroy {
 
       if (this.gameCounter % 60 === 0) {
         this.frameCounter++;
-        this.getGameState(true, 'NO_KEY');
+        this.gameStateService.doComputerMove();
       }
 
-      cancelAnimationFrame(this.animationFrameId); // cancels the PREVIOUS frame
+      cancelAnimationFrame(this.animationFrameId); // This breaks the animationframe loop
 
-      this.gameLoop();
+      this.startGameLoop();
     });
   }
 
-  private getGameState(computerMove: boolean, userMove: string): void {
-    const url = 'http://localhost:8080/game/getGameState';
-    const sessionId = this.cookieService.get('sessionId');
-    const username = localStorage.getItem('username');
-    this.http
-      .post(url, {
-        computerMove: computerMove,
-        keyPressed: userMove,
-        sessionId: sessionId,
-        username: username,
-      })
-      .subscribe({
-        next: (response) => this.setGameState(response as GameState),
-        error: (error: HttpErrorResponse) => console.log(error.message),
-      });
-  }
-
-  private setGameState(gameState: GameState): void {
-    this.gameState = gameState;
-    this.tileMap = gameState.tileMap;
-  }
-
   private setUser(user: User): void {
-    if (user == null) return;
+    if (!user) return;
     this.user = user;
     this.showOverlay = false;
   }
@@ -95,10 +81,10 @@ export class TetrisComponent implements OnDestroy {
 
     if (!this.isGameLoopActive) return;
 
-    this.gameLoop();
+    this.startGameLoop();
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     cancelAnimationFrame(this.animationFrameId);
   }
 
@@ -107,7 +93,7 @@ export class TetrisComponent implements OnDestroy {
     this.cookieService.delete('sessionId');
     this.getNewSessionId();
     this.isGameLoopActive = true;
-    this.gameLoop();
+    this.startGameLoop();
   }
 
   private getNewSessionId(): void {

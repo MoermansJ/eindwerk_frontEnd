@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { User } from 'src/app/interface/User';
 
 @Component({
   selector: 'app-register-page',
@@ -9,22 +10,21 @@ import { Component } from '@angular/core';
 export class RegisterPageComponent {
   public username: string = '';
   public password: string = '';
-  public result: string = '';
+  public operationResult: string = '';
 
   constructor(private http: HttpClient) {}
 
   public register(username: string, password: string): void {
+    if (!username || !password) return;
+
     const url = 'http://localhost:8080/auth/register';
-    this.http
-      .post(url, {
-        username: username,
-        password: password,
-      })
-      .subscribe({
-        next: (response: any) => {
-          this.result = `Successfully registered ${response.username}.`;
-        },
-        error: (error: HttpErrorResponse) => (this.result = error.error),
-      });
+    const registerDetails = { username: username, password: password };
+
+    this.http.post<User>(url, registerDetails).subscribe({
+      next: (response) => {
+        this.operationResult = `Successfully registered ${response.username}.`;
+      },
+      error: (error: HttpErrorResponse) => (this.operationResult = error.error),
+    });
   }
 }

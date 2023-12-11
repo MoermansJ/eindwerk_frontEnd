@@ -13,20 +13,19 @@ import { DataService } from 'src/app/service/data.service';
   templateUrl: './profile-page.component.html',
   styleUrls: ['./profile-page.component.sass'],
 })
-export class ProfilePageComponent implements OnInit {
-  public highscore: HighScore | null = null;
+export class ProfilePageComponent {
+  public highscore: HighScore | undefined;
+  public username: string = '';
 
-  constructor(private http: HttpClient, private data: DataService) {}
-
-  public ngOnInit(): void {
-    const username = localStorage.getItem('username') as string;
-    this.fetchHighScoreByUser(username);
+  constructor(private http: HttpClient) {
+    this.username = localStorage.getItem('username') as string;
+    this.fetchHighScoreByUser(this.username);
   }
 
   private fetchHighScoreByUser(username: String): void {
     const url = `http://localhost:8080/highscore/getHighScoreByUsername?username=${username}`;
-    this.http.get(url).subscribe({
-      next: (response) => (this.highscore = response as HighScore),
+    this.http.get<HighScore>(url).subscribe({
+      next: (response) => (this.highscore = response),
       error: (error: HttpErrorResponse) => console.log(error.message),
     });
   }

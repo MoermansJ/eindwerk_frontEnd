@@ -10,10 +10,10 @@ import { User } from 'src/app/interface/User';
   styleUrls: ['./login-page.component.sass'],
 })
 export class LoginPageComponent {
-  private user: User | null = null;
+  private user: User | undefined;
   public username: string = '';
   public password: string = '';
-  public result: string = '';
+  public operationResult: string = '';
 
   constructor(
     private http: HttpClient,
@@ -22,21 +22,25 @@ export class LoginPageComponent {
   ) {}
 
   public login(username: string, password: string): void {
+    if (!username || !password) return;
+    this.loginHttpRequest(username, password);
+  }
+
+  private loginHttpRequest(username: string, password: string): void {
     const url = 'http://localhost:8080/auth/login';
-    this.http
-      .post(url, {
-        username: username,
-        password: password,
-      })
-      .subscribe({
-        next: (response) => {
-          const user = response as User;
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('username', user.username);
-          this.result = `Successfully logged in ${user.username}.`;
-          this.data.setUser(user);
-        },
-        error: (error: HttpErrorResponse) => (this.result = error.message),
-      });
+    const loginDetails = { username: username, password: password };
+
+    this.http.post<User>(url, loginDetails).subscribe({
+      next: (response) => this.saveUserAndNavigate(response),
+      error: (error: HttpErrorResponse) => (this.operationResult = error.error),
+    });
+  }
+
+  private saveUserAndNavigate(user: User): void {
+    localStorage.setItem('token', user.token);
+    localStorage.setItem('username', user.username);
+    this.operationResult = `Successfully logged in ${user.username}.`;
+    this.data.setUser(user);
+    setTimeout(() => this.router.navigate(['/profile']), 1500);
   }
 }

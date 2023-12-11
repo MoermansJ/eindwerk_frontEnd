@@ -1,20 +1,50 @@
-<h2>leaderboard</h2>
+<div id="leaderboard-page">
+	<div id="leaderboard">
 
-<p-card class="flex justify-content-center">
-	<p-table [value]="leaderboard" [tableStyle]="{ 'min-width': '50rem' }">
-		<ng-template pTemplate="header">
-			<tr>
-				<th>#</th>
-				<th>username</th>
-				<th>score</th>
-			</tr>
-		</ng-template>
-		<ng-template pTemplate="body" let-highscore let-rowIndex="rowIndex">
-			<tr>
-				<td>{{ rowIndex + 1 }}</td>
-				<td>{{ highscore.username }}</td>
-				<td>{{ highscore.score }}</td>
-			</tr>
-		</ng-template>
-	</p-table>
-</p-card>
+		<p-card id="leaderboard-table">
+			<h2>Leaderboard</h2>
+			<p-table [value]="leaderboard">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>#</th>
+						<th>username</th>
+						<th>score</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-highscore let-rowIndex="rowIndex">
+					<tr>
+						<td>{{ rowIndex + 1 }}</td>
+						<td>{{ highscore.username }}</td>
+						<td>{{ highscore.score }}</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</p-card>
+
+		<p-card id="profile-highscore">
+			<h2>You</h2>
+			<p-table [value]="highscore">
+				<ng-template pTemplate="header">
+					<tr>
+						<th>Your score</th>
+					</tr>
+				</ng-template>
+				<ng-template pTemplate="body" let-highscore>
+					<tr>
+						<td>{{ highscore.score }}</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</p-card>
+	</div>
+
+
+
+	<div class="flex align-items-center justify-content-start">
+		<!-- <div class="flex justify-content-center align-items-center gap-3">
+			<span>Items per page: </span>
+			<p-slider [(ngModel)]="rows" (ngModelChange)="first = 0" [style]="{ width: '10rem' }" [min]="10" [max]="120" [step]="30"></p-slider>
+		</div> -->
+		<p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="highscore.length" [showFirstLastIcon]="false" [showCurrentPageReport]="true"></p-paginator>
+	</div>
+</div>

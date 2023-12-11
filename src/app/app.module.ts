@@ -24,6 +24,11 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
 import { TetrisComponent } from './component/tetris/tetris.component';
+import { PaginatorModule } from 'primeng/paginator';
+import { SliderModule } from 'primeng/slider';
+import { Panel, PanelModule } from 'primeng/panel';
+import { FieldsetModule } from 'primeng/fieldset';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   declarations: [
@@ -53,6 +58,11 @@ import { TetrisComponent } from './component/tetris/tetris.component';
     BreadcrumbModule,
     TableModule,
     CardModule,
+    PaginatorModule,
+    SliderModule,
+    FieldsetModule,
+    PanelModule,
+    ProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
