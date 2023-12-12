@@ -38,9 +38,12 @@ export class NavbarMenu {
   }
 
   private updateNavbarItemsWithUserInfo(navbarItems: any[], user: User) {
-    navbarItems[2].label = user.username;
-    navbarItems[2].items = [
-      { label: 'profile', routerLink: '/profile' },
+    navbarItems[3].label = user.username;
+    navbarItems[3].items = [
+      {
+        label: 'profile',
+        routerLink: '/profile',
+      },
       { label: 'log out', command: () => this.logout() },
     ];
 
@@ -61,6 +64,15 @@ export class NavbarMenu {
           { label: 'play', routerLink: '/game' },
           { label: 'leaderboard', routerLink: '/leaderboard' },
         ],
+      },
+      {
+        label: 'search',
+        icon: 'pi pi-fw pi-search',
+        routerLink: 'search',
+        // items: [
+        //   { label: 'log in', routerLink: 'login' },
+        //   { label: 'register', routerLink: 'register' },
+        // ],
       },
       {
         label: 'visitor',

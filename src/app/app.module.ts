@@ -29,6 +29,7 @@ import { SliderModule } from 'primeng/slider';
 import { Panel, PanelModule } from 'primeng/panel';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { SearchPageComponent } from './page/search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ProfilePageComponent,
     LeaderboardPageComponent,
     TetrisComponent,
+    SearchPageComponent,
   ],
   imports: [
     BrowserModule,

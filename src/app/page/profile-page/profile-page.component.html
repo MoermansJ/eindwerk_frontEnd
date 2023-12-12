@@ -1,19 +1,21 @@
 <div id="profile-page">
-	<p-fieldset>
-		<ng-template pTemplate="header">
-			<div class="flex align-items-center ">
-				<span class="pi pi-user mr-2"></span>
-				<span class="font-bold text-lg">{{ username }}'s profile</span>
+	<div id="profile-page-content">
+		<p-fieldset>
+			<ng-template pTemplate="header">
+				<div class="flex align-items-center ">
+					<span class="pi pi-user mr-2"></span>
+					<span class="font-bold text-lg">{{ username }}'s profile</span>
+				</div>
+			</ng-template>
+
+			<div id="profile-content">
+				<div>username: jonathan</div>
+
+				<p-card id="profile-highscore">
+					<h3> highscore </h3>
+					<div> {{highscore?.score}} </div>
+				</p-card>
 			</div>
-		</ng-template>
-
-		<div id="profile-content">
-			<div>username: jonathan</div>
-
-			<p-card id="profile-highscore">
-				<h3> highscore </h3>
-				<div> {{highscore?.score}} </div>
-			</p-card>
-		</div>
-	</p-fieldset>
+		</p-fieldset>
+	</div>
 </div>
