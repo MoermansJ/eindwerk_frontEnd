@@ -9,12 +9,35 @@
 
 #profile-highscore
 	text-align: center
-	
-	& div
-		border: 1px solid rgb(0,0,0,0.3)
-		border-radius: 4px
-		padding: 1rem
+	margin-left: auto
 
 #profile-content
 	display: flex
-	justify-content: space-between
+	align-items: flex-start
+	gap: 2rem
+
+	> div
+		display: flex
+		gap: 1.8rem
+	
+	img
+		border-radius: 4px
+		max-width: 300px
+
+#profile-content-right
+	margin-left: auto
+	display: flex
+	flex-direction: column
+
+	> div
+		gap: 8px
+		display: flex
+		flex-direction: column
+		justify-content: center
+		> button
+			width: 100%
+			border: 1px solid #E5E7EC
+			border-radius: 4px
+			padding: 0.5rem
+			background: #F9FAFB
+			color: #384150

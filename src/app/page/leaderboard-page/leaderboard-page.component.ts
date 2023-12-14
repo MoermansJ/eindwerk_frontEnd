@@ -13,7 +13,7 @@ export class LeaderboardPageComponent {
   public first: number = 0;
   public rows: number = 10;
   public totalRecords: number = 0;
-  private paginationCounter: number = 0;
+  public boardStartIndex: number = 0;
 
   constructor(private http: HttpClient) {
     this.fetchLeaderboard();
@@ -24,11 +24,7 @@ export class LeaderboardPageComponent {
     const url = `http://localhost:8080/highscore/getAllHighScores`;
 
     this.http.get<HighScore[]>(url).subscribe({
-      next: (response) => {
-        this.leaderboard = response;
-      },
-      // next: (response: any) => (this.leaderboard = response?.content),
-      // next: (response) => console.log(response),
+      next: (response) => (this.leaderboard = response),
       error: (error: HttpErrorResponse) => console.log(error.error),
     });
   }
@@ -47,5 +43,13 @@ export class LeaderboardPageComponent {
   public onPageChange(event: any): void {
     this.first = event.first;
     this.rows = event.rows;
+  }
+
+  public updateBoardStartIndex(factor: number): void {
+    if (factor == 1 && this.boardStartIndex > this.leaderboard.length - 1)
+      return;
+    if (factor == -1 && this.boardStartIndex <= 0) return;
+
+    this.boardStartIndex += factor * 10;
   }
 }

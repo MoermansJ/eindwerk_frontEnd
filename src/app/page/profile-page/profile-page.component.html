@@ -9,12 +9,29 @@
 			</ng-template>
 
 			<div id="profile-content">
-				<div>username: jonathan</div>
+				<!-- card left side -->
+				<div>
+					<img src="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" />
 
-				<p-card id="profile-highscore">
-					<h3> highscore </h3>
-					<div> {{highscore?.score}} </div>
-				</p-card>
+					<div>
+						<div *ngFor="let keyvalue of highscore | keyvalue">
+							{{ keyvalue.key + ': ' + keyvalue.value }}
+						</div>
+					</div>
+				</div>
+
+				<!-- card right side -->
+				<div id="profile-content-right">
+					<div>
+						<button><span class="pi pi-envelope"> Messages</span></button>
+						<button><span class="pi pi-user-edit"> Edit profile</span></button>
+					</div>
+
+					<p-card id="profile-highscore">
+						<h3> highscore </h3>
+						<div> {{highscore?.score}} </div>
+					</p-card>
+				</div>
 			</div>
 		</p-fieldset>
 	</div>

@@ -1,0 +1,14 @@
+<table>
+	<thead>
+		<tr>
+			<th>Username</th>
+			<th>Score</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let highscore of leaderboardData.slice(boardStartIndex, boardStartIndex + 10)">
+			<td>{{ highscore.username }}</td>
+			<td>{{ highscore.score }}</td>
+		</tr>
+	</tbody>
+</table>

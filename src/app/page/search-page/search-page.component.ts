@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Friendship } from 'src/app/interface/Friendship';
 import { User } from 'src/app/interface/User';
 
 @Component({
@@ -8,18 +9,37 @@ import { User } from 'src/app/interface/User';
   styleUrls: ['./search-page.component.sass'],
 })
 export class SearchPageComponent {
-  public username: string = '';
-  public searchResult: string = '';
+  public searchInput: string = '';
+  public searchedProfile: User | undefined;
 
   constructor(private http: HttpClient) {}
 
-  public onChange(): void {
-    const url = `http://localhost:8080/search/searchForUserByUsername?username=${this.username}`;
+  public searchForUser(): void {
+    const url = `http://localhost:8080/search/searchForUserByUsername?username=${this.searchInput}`;
     this.http.get<User>(url).subscribe({
-      next: (response) =>
-        (this.searchResult = 'Your search result = ' + response.username),
-      error: (error: HttpErrorResponse) =>
-        (this.searchResult = 'Your search result = ' + error.error),
+      next: (response) => (this.searchedProfile = response),
+      error: (error: HttpErrorResponse) => console.log(error.error),
+    });
+  }
+
+  public sendFriendRequest(friendUsername: string): void {
+    const url = `http://localhost:8080/friendship/addFriendship`;
+    const myUsername = localStorage.getItem('username');
+    const newFriendship = {
+      usernameA: myUsername,
+      usernameB: friendUsername,
+    } as Friendship;
+
+    this.sendFriendRequestHttpRequest(url, newFriendship);
+  }
+
+  private sendFriendRequestHttpRequest(
+    url: string,
+    friendship: Friendship
+  ): void {
+    this.http.post<Friendship>(url, friendship).subscribe({
+      next: (response) => console.log(response),
+      error: (error: HttpErrorResponse) => console.log(console.error),
     });
   }
 }

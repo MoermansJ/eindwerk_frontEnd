@@ -37,19 +37,6 @@ export class NavbarMenu {
     return this.updateNavbarItemsWithUserInfo(defaultItems, user);
   }
 
-  private updateNavbarItemsWithUserInfo(navbarItems: any[], user: User) {
-    navbarItems[3].label = user.username;
-    navbarItems[3].items = [
-      {
-        label: 'profile',
-        routerLink: '/profile',
-      },
-      { label: 'log out', command: () => this.logout() },
-    ];
-
-    return navbarItems;
-  }
-
   private static getDefaultItems(): any {
     return [
       {
@@ -61,27 +48,55 @@ export class NavbarMenu {
         label: 'game',
         icon: 'pi pi-fw pi-box',
         items: [
-          { label: 'play', routerLink: '/game' },
-          { label: 'leaderboard', routerLink: '/leaderboard' },
+          { label: 'play', icon: 'pi pi-fw pi-play', routerLink: '/game' },
+          {
+            label: 'leaderboard',
+            icon: 'pi pi-fw pi-globe',
+            routerLink: '/leaderboard',
+          },
         ],
       },
       {
-        label: 'search',
-        icon: 'pi pi-fw pi-search',
-        routerLink: 'search',
-        // items: [
-        //   { label: 'log in', routerLink: 'login' },
-        //   { label: 'register', routerLink: 'register' },
-        // ],
+        label: 'community',
+        icon: 'pi pi-fw pi-users',
+        items: [
+          {
+            label: 'search users',
+            icon: 'pi pi-fw pi-search',
+            routerLink: 'search',
+          },
+        ],
       },
       {
         label: 'visitor',
         icon: 'pi pi-fw pi-user',
         items: [
-          { label: 'log in', routerLink: 'login' },
-          { label: 'register', routerLink: 'register' },
+          {
+            label: 'register',
+            icon: 'pi pi-fw pi-plus-circle',
+            routerLink: 'register',
+          },
+          { label: 'log in', icon: 'pi pi-fw pi-sign-in', routerLink: 'login' },
         ],
       },
     ];
+  }
+
+  private updateNavbarItemsWithUserInfo(navbarItems: any[], user: User) {
+    navbarItems[3].label = user.username;
+    navbarItems[3].items = [
+      {
+        label: 'profile',
+        icon: 'pi pi-fw pi-user',
+        routerLink: '/profile',
+      },
+      {
+        label: 'log out',
+        icon: 'pi pi-fw pi-sign-out',
+        command: () => this.logout(),
+      },
+    ];
+
+    return navbarItems;
   }
 }

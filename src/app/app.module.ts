@@ -30,6 +30,9 @@ import { Panel, PanelModule } from 'primeng/panel';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SearchPageComponent } from './page/search-page/search-page.component';
+import { UserSearchCardComponent } from './component/user-search-card/user-search-card.component';
+import { LeaderboardTableComponent } from './component/leaderboard-table/leaderboard-table.component';
+import { LeaderboardUserHighscoreComponent } from './component/leaderboard-user-highscore/leaderboard-user-highscore.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,9 @@ import { SearchPageComponent } from './page/search-page/search-page.component';
     LeaderboardPageComponent,
     TetrisComponent,
     SearchPageComponent,
+    UserSearchCardComponent,
+    LeaderboardTableComponent,
+    LeaderboardUserHighscoreComponent,
   ],
   imports: [
     BrowserModule,

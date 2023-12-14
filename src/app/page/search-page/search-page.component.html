@@ -1,3 +1,12 @@
-<p>search-page works!</p>
-<input type="text" placeholder="username" [(ngModel)]="username" (change)="onChange()" />
-{{ searchResult }}
+<div id="search-page">
+	<div id="search-page-content">
+
+		<input type="text" placeholder="Search for username" [(ngModel)]="searchInput" (change)="searchForUser()" />
+		{{ searchedProfile }}
+
+		<!-- <img [src]="searchedProfile.image" /> -->
+
+		<button *ngIf="searchedProfile" (click)="sendFriendRequest(searchedProfile.username)">Send friendrequest</button>
+
+	</div>
+</div>
