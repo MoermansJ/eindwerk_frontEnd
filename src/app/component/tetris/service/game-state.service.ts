@@ -2,10 +2,8 @@ import { Injectable } from '@angular/core';
 import { GameStateRequest } from 'src/app/interface/GameStateRequest';
 import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { GameState } from '../interface/GameState';
-import { TileMap } from '../interface/TileMap';
+import { GameState } from '../../../interface/GameState';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../interface/User';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +20,11 @@ export class GameStateService {
     return this.gameState.asObservable();
   }
 
-  private requestGameState(computerMove: boolean, userMove: string): void {
+  public setGameState(gameState: GameState): void {
+    this.gameState.next(gameState);
+  }
+
+  public requestGameState(computerMove: boolean, userMove: string): void {
     const url = 'http://localhost:8080/game/getGameState';
     const gameStateRequest = this.createGameStateRequest(
       computerMove,
@@ -52,17 +54,5 @@ export class GameStateService {
       next: (response) => this.setGameState(response),
       error: (error: HttpErrorResponse) => console.log(error.error),
     });
-  }
-
-  public doComputerMove(): void {
-    this.requestGameState(true, 'NO_KEY');
-  }
-
-  public doPlayerMove(key: string): void {
-    this.requestGameState(false, key);
-  }
-
-  private setGameState(gameState: GameState): void {
-    this.gameState.next(gameState);
   }
 }

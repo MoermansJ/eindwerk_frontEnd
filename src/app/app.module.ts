@@ -23,7 +23,7 @@ import { LeaderboardPageComponent } from './page/leaderboard-page/leaderboard-pa
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TableModule } from 'primeng/table';
 import { CardModule } from 'primeng/card';
-import { TetrisComponent } from './component/tetris/tetris.component';
+import { TetrisComponent } from './component/tetris/component/tetris.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { SliderModule } from 'primeng/slider';
 import { Panel, PanelModule } from 'primeng/panel';

@@ -13,7 +13,7 @@
 	</div>
 
 	<div id="game-buttons">
-		<button pButton (click)="toggleGameLoop()" [icon]="isGameLoopActive ? 'pi pi-pause' : 'pi pi-play'"></button>
-		<button pButton (click)="newGame()" icon="pi pi-replay"> </button>
+		<button pButton (click)="this.gameLoopService.toggleGameLoop()" [icon]="this.gameLoopService.isGameLoopActive ? 'pi pi-pause' : 'pi pi-play'"></button>
+		<button pButton (click)="this.gameLoopService.newGame()" icon="pi pi-replay"> </button>
 	</div>
 </div>
