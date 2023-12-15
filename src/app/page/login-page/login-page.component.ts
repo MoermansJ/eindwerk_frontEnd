@@ -22,7 +22,7 @@ export class LoginPageComponent {
   ) {}
 
   public login(username: string, password: string): void {
-    if (!username || !password) return;
+    if (!this.passesformValidation()) return;
     this.loginHttpRequest(username, password);
   }
 
@@ -42,5 +42,18 @@ export class LoginPageComponent {
     this.operationResult = `Successfully logged in ${user.username}.`;
     this.data.setUser(user);
     setTimeout(() => this.router.navigate(['/profile']), 1500);
+  }
+
+  private passesformValidation(): boolean {
+    if (!this.password.length) {
+      this.operationResult = `Password must not be empty.`;
+      return false;
+    }
+    if (!this.username.trim()) {
+      this.operationResult = `Username must not be empty.`;
+      return false;
+    }
+
+    return true;
   }
 }

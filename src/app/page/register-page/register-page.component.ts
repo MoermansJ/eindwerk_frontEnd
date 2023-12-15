@@ -14,11 +14,14 @@ export class RegisterPageComponent {
 
   constructor(private http: HttpClient) {}
 
-  public register(username: string, password: string): void {
-    if (!username || !password) return;
+  public register(): void {
+    if (!this.passesFormValidation()) return;
 
     const url = 'http://localhost:8080/auth/register';
-    const registerDetails = { username: username, password: password };
+    const registerDetails = {
+      username: this.username,
+      password: this.password,
+    };
 
     this.http.post<User>(url, registerDetails).subscribe({
       next: (response) => {
@@ -26,5 +29,18 @@ export class RegisterPageComponent {
       },
       error: (error: HttpErrorResponse) => (this.operationResult = error.error),
     });
+  }
+
+  private passesFormValidation(): boolean {
+    if (this.password.length <= 6) {
+      this.operationResult = `Password must be at least 7 characters.`;
+      return false;
+    }
+    if (!this.username.trim()) {
+      this.operationResult = `Username must not be empty.`;
+      return false;
+    }
+
+    return true;
   }
 }
