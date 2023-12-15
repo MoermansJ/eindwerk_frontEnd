@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { MovementService } from './movement.service';
+import { UserInputService } from './user-input.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class GameLoopService implements OnDestroy {
   constructor(
     private cookieService: NgxCookieService,
     private http: HttpClient,
-    private movementService: MovementService
+    private userInputService: UserInputService
   ) {}
 
   public startGameLoop(): void {
@@ -24,9 +24,13 @@ export class GameLoopService implements OnDestroy {
     this.animationFrameId = requestAnimationFrame(() => {
       this.gameCounter++;
 
+      if (this.gameCounter % 7 === 0) {
+        this.userInputService.flushInputBuffer();
+      }
+
       if (this.gameCounter % 60 === 0) {
         this.frameCounter++;
-        this.movementService.doComputerMove();
+        this.userInputService.addMovementToBuffer('COMPUTERMOVE');
       }
 
       cancelAnimationFrame(this.animationFrameId); // This breaks the animationframe loop

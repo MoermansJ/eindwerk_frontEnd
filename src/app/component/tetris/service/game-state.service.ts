@@ -24,33 +24,15 @@ export class GameStateService {
     this.gameState.next(gameState);
   }
 
-  public requestGameState(computerMove: boolean, userMove: string): void {
+  public requestGameState(movementBuffer: string[]): void {
     const url = 'http://localhost:8080/game/getGameState';
-    const gameStateRequest = this.createGameStateRequest(
-      computerMove,
-      userMove
-    );
-
-    this.sendGameStateRequest(url, gameStateRequest);
-  }
-
-  private createGameStateRequest(
-    computerMove: boolean,
-    userMove: string
-  ): GameStateRequest {
-    return {
-      computerMove,
-      keyPressed: userMove,
+    const body = {
+      movementBuffer: movementBuffer,
       sessionId: this.cookieService.get('sessionId'),
       username: localStorage.getItem('username') || '',
     };
-  }
 
-  private sendGameStateRequest(
-    url: string,
-    gameStateRequest: GameStateRequest
-  ): void {
-    this.http.post<GameState>(url, gameStateRequest).subscribe({
+    this.http.post<GameState>(url, body).subscribe({
       next: (response) => this.setGameState(response),
       error: (error: HttpErrorResponse) => console.log(error.error),
     });

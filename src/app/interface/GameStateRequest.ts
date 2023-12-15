@@ -1,6 +1,5 @@
 export interface GameStateRequest {
-  computerMove: boolean;
-  keyPressed: string;
+  movementBuffer: string[];
   sessionId: string;
   username: string;
 }
