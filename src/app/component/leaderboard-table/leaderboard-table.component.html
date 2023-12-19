@@ -1,14 +1,26 @@
-<table>
-	<thead>
-		<tr>
-			<th>Username</th>
-			<th>Score</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let highscore of leaderboardData.slice(boardStartIndex, boardStartIndex + 10)">
-			<td>{{ highscore.username }}</td>
-			<td>{{ highscore.score }}</td>
-		</tr>
-	</tbody>
-</table>
+<div id="leaderboard-table">
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Username</th>
+				<th>Score</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let highscore of leaderboardData.slice(boardStartIndex, boardStartIndex + 10)">
+				<td>{{ leaderboardData.indexOf(highscore) + 1 }}</td>
+				<td>{{ highscore.username }}</td>
+				<td>{{ highscore.score }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<div>
+		<div id="leaderboard-pagination">
+			<button (click)="updateBoardStartIndex(-1)" [disabled]="boardStartIndex == 0" class="pi pi-arrow-circle-left"></button>
+			<strong>{{ boardStartIndex / 10 + 1 }}</strong>
+			<button (click)="updateBoardStartIndex(+1)" [disabled]="boardStartIndex >= leaderboardData.length /10 - 1" class="pi pi-arrow-circle-right"></button>
+		</div>
+	</div>
+</div>

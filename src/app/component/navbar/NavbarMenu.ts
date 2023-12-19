@@ -47,14 +47,7 @@ export class NavbarMenu {
       {
         label: 'game',
         icon: 'pi pi-fw pi-box',
-        items: [
-          { label: 'play', icon: 'pi pi-fw pi-play', routerLink: '/game' },
-          {
-            label: 'leaderboard',
-            icon: 'pi pi-fw pi-globe',
-            routerLink: '/leaderboard',
-          },
-        ],
+        routerLink: '/game',
       },
       {
         label: 'community',
@@ -64,6 +57,11 @@ export class NavbarMenu {
             label: 'search users',
             icon: 'pi pi-fw pi-search',
             routerLink: 'search',
+          },
+          {
+            label: 'leaderboard',
+            icon: 'pi pi-fw pi-globe',
+            routerLink: '/leaderboard',
           },
         ],
       },

@@ -44,12 +44,4 @@ export class LeaderboardPageComponent {
     this.first = event.first;
     this.rows = event.rows;
   }
-
-  public updateBoardStartIndex(factor: number): void {
-    if (factor == 1 && this.boardStartIndex > this.leaderboard.length - 1)
-      return;
-    if (factor == -1 && this.boardStartIndex <= 0) return;
-
-    this.boardStartIndex += factor * 10;
-  }
 }

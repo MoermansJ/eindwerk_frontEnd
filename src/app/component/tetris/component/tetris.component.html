@@ -4,6 +4,11 @@
 
 	<div *ngIf="tileMap">{{ tileMap.linesCleared }}</div>
 
+	<div id="game-overlay">
+		Seed:
+		<input type="text" [(ngModel)]="seed" [disabled]="gameLoopService.isGameLoopActive" />
+	</div>
+
 	<div *ngIf="tileMap" id="game-gamestate-display">
 		<div>
 			<div>
@@ -13,7 +18,14 @@
 	</div>
 
 	<div id="game-buttons">
-		<button pButton (click)="this.gameLoopService.toggleGameLoop()" [icon]="this.gameLoopService.isGameLoopActive ? 'pi pi-pause' : 'pi pi-play'"></button>
-		<button pButton (click)="this.gameLoopService.newGame()" icon="pi pi-replay"> </button>
+		<div>
+			{{ this.gameLoopService.isGameLoopActive ? 'pause' : 'play' }}
+			<button pButton (click)="this.gameLoopService.toggleGameLoop()" [icon]="this.gameLoopService.isGameLoopActive ? 'pi pi-pause' : 'pi pi-play'" [disabled]="!this.firstGameStarted"></button>
+		</div>
+
+		<div>
+			{{ this.firstGameStarted ? 'new' : 'start' }}
+			<button pButton (click)="newGame()" icon="pi pi-replay"> </button>
+		</div>
 	</div>
 </div>

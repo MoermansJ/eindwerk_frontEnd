@@ -1,20 +1,10 @@
 <div id="leaderboard-page">
 	<div id="leaderboard-page-content">
+		<h2>Leaderboard</h2>
 
-		<!-- upper page -->
 		<div>
 			<app-leaderboard-table [leaderboardData]="leaderboard" [boardStartIndex]="boardStartIndex" />
 			<app-leaderboard-user-highscore [userHighscoreData]="highscore" />
 		</div>
-
-		<!-- lower page -->
-		<div>
-			<div id="leaderboard-pagination">
-				<button (click)="updateBoardStartIndex(-1)" [disabled]="boardStartIndex == 0" class="pi pi-arrow-circle-left"></button>
-				<strong>{{ boardStartIndex / 10 + 1 }}</strong>
-				<button (click)="updateBoardStartIndex(+1)" [disabled]="boardStartIndex >= leaderboard.length - 1" class="pi pi-arrow-circle-right"></button>
-			</div>
-		</div>
-
 	</div>
 </div>

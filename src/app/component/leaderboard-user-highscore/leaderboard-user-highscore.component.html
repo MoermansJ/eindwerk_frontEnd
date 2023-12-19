@@ -1,15 +1,14 @@
-<p-card id="profile-highscore">
-	<h2>You</h2>
-	<p-table [value]="userHighscoreData">
-		<ng-template pTemplate="header">
+<div id="profile-highscore">
+	<table>
+		<thead>
 			<tr>
-				<th>Your score</th>
+				<th>You</th>
 			</tr>
-		</ng-template>
-		<ng-template pTemplate="body" let-highscore>
+		</thead>
+		<tbody>
 			<tr>
-				<td>{{ highscore.score }}</td>
+				<td>{{ userHighscoreData[0]?.score }}</td>
 			</tr>
-		</ng-template>
-	</p-table>
-</p-card>
+		</tbody>
+	</table>
+</div>

@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, NgZone, OnDestroy } from '@angular/core';
-import { GameState } from 'src/app/interface/GameState';
-import { TileMap } from 'src/app/interface/TileMap';
+import { GameState } from 'src/app/component/tetris/interface/GameState';
+import { TileMap } from 'src/app/component/tetris/interface/TileMap';
 import { CookieService as NgxCookieService } from 'ngx-cookie-service';
 
 @Component({
