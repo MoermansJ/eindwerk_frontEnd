@@ -40,7 +40,7 @@ export class GameStateRequestService {
     gameStateRequest: GameStateRequest
   ): GameStateRequest {
     gameStateRequest.sessionId = this.cookieService.get('sessionId');
-    gameStateRequest.username = localStorage.getItem('username');
+    gameStateRequest.username = localStorage.getItem('username') || 'anonymous';
 
     return gameStateRequest;
   }

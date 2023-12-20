@@ -13,7 +13,7 @@ export class MovementService {
     this.movementBuffer.push(key);
   }
 
-  public retrieveDeepCopyAndFlushMovementBuffer(): string[] {
+  public getAndFlushMovementBuffer(): string[] {
     const movementBuffer = [...this.movementBuffer];
     this.movementBuffer = [];
     return movementBuffer;

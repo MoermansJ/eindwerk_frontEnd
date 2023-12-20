@@ -1,10 +1,10 @@
 <div id="game-tetris">
 	<h2>Tetris</h2>
-	<!-- <p-progressSpinner id="loadscreen"></p-progressSpinner> -->
 
-	<div *ngIf="tileMap">{{ tileMap.linesCleared }}</div>
+	<div *ngIf="tileMap">Score : {{ tileMap.linesCleared }}</div>
+	<div *ngIf="tileMap">Difficulty : {{ difficultyLevel }}</div>
 
-	<div id="game-overlay">
+	<div>
 		Seed:
 		<input type="text" [(ngModel)]="seed" [disabled]="gameLoopService.isGameLoopActive" />
 	</div>

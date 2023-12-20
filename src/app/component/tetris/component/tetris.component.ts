@@ -17,36 +17,41 @@ export class TetrisComponent {
   protected user: User | undefined;
   protected tileMap: TileMap = {} as TileMap;
   protected firstGameStarted: boolean = false;
+  protected linesCleared: number = 0;
+  protected difficultyLevel: number = 0;
   private gameState: GameState = {} as GameState;
 
   constructor(
     protected gameLoopService: GameLoopService,
-    private data: DataService,
     private gameStateService: GameStateService,
-    private userInputService: MovementService
+    private userInputService: MovementService,
+    private data: DataService
   ) {
     this.subscribeToServices();
-    this.gameLoopService.startGameLoop();
+    this.gameLoopService.gameLoop();
   }
 
   private subscribeToServices(): void {
-    this.data.getUser().subscribe({
-      next: (user) => user,
-    });
-
     this.gameStateService.getGameState().subscribe({
       next: (gamestate) => this.updateView(gamestate as GameState),
+    });
+
+    this.data.getDifficultyLevel().subscribe({
+      next: (response) => (this.difficultyLevel = response),
     });
   }
 
   private updateView(gamestate: GameState): void {
     this.gameState = gamestate as GameState;
     this.tileMap = gamestate?.tileMap as TileMap;
+    this.linesCleared = gamestate?.tileMap.linesCleared;
   }
 
   protected newGame(): void {
-    this.firstGameStarted = true;
-    this.gameLoopService.newGame(this.seed.trim());
+    setTimeout(() => {
+      this.firstGameStarted = true;
+      this.gameLoopService.newGame(this.seed.trim());
+    }, 1000);
   }
 
   @HostListener('window:keydown', ['$event'])

@@ -2,11 +2,9 @@
 	display: flex
 	flex-direction: column
 	height: 100%
-
+	overflow: hidden
 	> h2
 		padding-top: 2rem
-
-#game-overlay
 
 #game-gamestate-display
 	position: relative
@@ -14,7 +12,7 @@
 	flex-direction: column
 	align-items: center
 	width: 282px
-	border-bottom: 1px solid black
+	border-bottom: 1px solid rgb(211,211,211)
 	height: 100%
 	
 	div > div
@@ -38,31 +36,28 @@
 	width: 50vw
 	max-width: 20px
 	max-height: 20px
-	border: 1px solid black
+	border: 1px solid rgb(0,0,0,0.3)
 	border-collapse: collapse
 
 
 // TetrisPiece classes
 .PieceI
-	background: cyan
+	background: rgb(0, 183, 255)
 
 .PieceJ
-	background: blue
-
-.PieceL
-	background: orange
+	background: #2b5ed5
 
 .PieceO
-	background: grey
+	background: #ff0099
 
 .PieceL
-	background: yellow
+	background: gold
 
 .PieceS
-	background: green
+	background: #6dae52
 
 .PieceT
-	background: red
+	background: #f01108
 
 .PieceZ
-	background: purple
+	background: #a22bd5

@@ -26,7 +26,7 @@ export class ProfilePageComponent {
     const url = `http://localhost:8080/highscore/getHighScoreByUsername?username=${username}`;
     this.http.get<HighScore>(url).subscribe({
       next: (response) => (this.highscore = response),
-      error: (error: HttpErrorResponse) => console.log(error.message),
+      // error: (error: HttpErrorResponse) => console.log(error.message),
     });
   }
 }

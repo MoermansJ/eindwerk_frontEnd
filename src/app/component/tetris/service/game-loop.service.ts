@@ -6,58 +6,71 @@ import { GameStateRequestService } from './game-state-request.service';
 import { GameStateRequest } from '../interface/GameStateRequest';
 import { GameState } from '../interface/GameState';
 import { GameStateService } from './game-state.service';
+import { DataService } from 'src/app/service/data.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GameLoopService {
+export class GameLoopService implements OnInit {
   public isGameLoopActive: boolean = false;
-  protected gameCounter: number = 0;
+  protected frameCounter: number = 0;
   private animationFrameId: number = 0;
   private gameStateRequest: GameStateRequest = {} as GameStateRequest;
+  private linesCleared: number = 0;
+  private computerMoveInterval: number = 60;
+  private previousMilestone: number = 0;
+  private difficultyLevel: number = 1;
 
   constructor(
     private cookieService: NgxCookieService,
     private http: HttpClient,
-    private userInputService: MovementService,
+    private movementService: MovementService,
     private gameStateRequestService: GameStateRequestService,
-    private gameStateService: GameStateService
+    private gameStateService: GameStateService,
+    private data: DataService
   ) {}
 
-  public startGameLoop(): void {
+  public ngOnInit(): void {
+    this.data.getLinesCleared().subscribe({
+      next: (response) => (this.linesCleared = response),
+    });
+  }
+
+  public gameLoop(): void {
     if (!this.isGameLoopActive) return;
 
     this.animationFrameId = requestAnimationFrame(() => {
-      this.gameCounter++;
-
-      if (this.gameCounter % 60 === 0) {
-        this.userInputService.addMovementToBuffer('COMPUTERMOVE');
-      }
-
-      if (this.gameCounter % 7 === 0) {
-        const flushedMovementBuffer =
-          this.userInputService.retrieveDeepCopyAndFlushMovementBuffer();
-        this.gameStateRequest.movementBuffer = flushedMovementBuffer;
-        this.sendGameStateRequest(this.gameStateRequest);
-      }
-
-      cancelAnimationFrame(this.animationFrameId); // This breaks the previous animationframe loop
-
-      this.startGameLoop();
+      this.gameLoopLogic();
+      cancelAnimationFrame(this.animationFrameId); // NOTE: This breaks the animationframe loop
+      this.gameLoop(); // NOTE: And this starts the next iteration
     });
+  }
+
+  private gameLoopLogic(): void {
+    this.frameCounter++;
+
+    if (this.canIncreaseDifficulty()) {
+      this.increaseDifficulty();
+    }
+
+    if (this.canDoComputerMove()) {
+      this.movementService.addMovementToBuffer('COMPUTERMOVE');
+    }
+
+    if (this.canDoUserMove()) {
+      this.doUserMove();
+    }
   }
 
   public toggleGameLoop(): void {
     this.isGameLoopActive = !this.isGameLoopActive;
     if (!this.isGameLoopActive) return;
-    this.startGameLoop();
+    this.gameLoop();
   }
 
   public newGame(seed: string): void {
-    this.cookieService.delete('sessionId');
-    this.getNewSessionId(seed);
-    this.isGameLoopActive = true;
-    this.startGameLoop();
+    this.resetForNewGame(seed);
+    this.gameLoop();
   }
 
   private getNewSessionId(seed: string): void {
@@ -77,9 +90,54 @@ export class GameLoopService {
     this.gameStateRequestService
       .sendGameStateRequest(gameStateRequest)
       .subscribe({
-        next: (response: GameState) =>
+        next: (response: GameState) => {
           this.gameStateService.setGameState(response),
+            (this.linesCleared = response.tileMap.linesCleared);
+        },
         error: (error: HttpErrorResponse) => console.error(error.error),
       });
+  }
+
+  private canIncreaseDifficulty(): boolean {
+    return (
+      this.linesCleared > this.previousMilestone &&
+      this.linesCleared % 2 === 0 &&
+      this.computerMoveInterval > 10
+    );
+  }
+
+  private increaseDifficulty(): void {
+    this.computerMoveInterval -= 10;
+    this.previousMilestone += 1;
+    this.difficultyLevel += 1;
+    this.data.setDifficultyLevel(this.difficultyLevel);
+  }
+
+  private resetDifficulty(): void {
+    this.computerMoveInterval = 60;
+    this.previousMilestone = 0;
+    this.difficultyLevel = 1;
+    this.data.setDifficultyLevel(this.difficultyLevel);
+  }
+
+  private resetForNewGame(seed: string): void {
+    this.cookieService.delete('sessionId');
+    this.getNewSessionId(seed);
+    this.isGameLoopActive = true;
+    this.resetDifficulty();
+  }
+
+  private canDoComputerMove(): boolean {
+    return this.frameCounter % this.computerMoveInterval === 0;
+  }
+
+  private canDoUserMove(): boolean {
+    return this.frameCounter % 10 === 0;
+  }
+
+  private doUserMove(): void {
+    const movementBuffer = this.movementService.getAndFlushMovementBuffer();
+    this.gameStateRequest.movementBuffer = movementBuffer;
+    this.sendGameStateRequest(this.gameStateRequest);
   }
 }
