@@ -15,7 +15,15 @@
 				<div *ngFor="let tile of tileMap.tiles" class="tile" [style.grid-column]="tile.point.x + 1" [style.grid-row]="tile.point.y + 1" [ngClass]="tile.content"></div>
 			</div>
 		</div>
+
+		<div id="game-next-piece">
+			<div>
+				<div *ngFor="let tile of nextPieceTileMap.tiles" class="tile" [style.grid-column]="tile.point.x + 1" [style.grid-row]="tile.point.y + 1" [ngClass]="tile.content"></div>
+			</div>
+		</div>
 	</div>
+
+
 
 	<div id="game-buttons">
 		<div>

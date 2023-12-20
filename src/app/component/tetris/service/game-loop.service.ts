@@ -92,7 +92,7 @@ export class GameLoopService implements OnInit {
       .subscribe({
         next: (response: GameState) => {
           this.gameStateService.setGameState(response),
-            (this.linesCleared = response.tileMap.linesCleared);
+            (this.linesCleared = response.currentPieceTileMap.linesCleared);
         },
         error: (error: HttpErrorResponse) => console.error(error.error),
       });

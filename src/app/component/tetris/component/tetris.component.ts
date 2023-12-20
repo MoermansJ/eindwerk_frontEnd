@@ -16,6 +16,7 @@ export class TetrisComponent {
   protected seed: string = '';
   protected user: User | undefined;
   protected tileMap: TileMap = {} as TileMap;
+  protected nextPieceTileMap: TileMap = {} as TileMap;
   protected firstGameStarted: boolean = false;
   protected linesCleared: number = 0;
   protected difficultyLevel: number = 0;
@@ -43,8 +44,9 @@ export class TetrisComponent {
 
   private updateView(gamestate: GameState): void {
     this.gameState = gamestate as GameState;
-    this.tileMap = gamestate?.tileMap as TileMap;
-    this.linesCleared = gamestate?.tileMap.linesCleared;
+    this.tileMap = gamestate?.currentPieceTileMap as TileMap;
+    this.nextPieceTileMap = gamestate?.nextPieceTileMap as TileMap;
+    this.linesCleared = gamestate?.currentPieceTileMap.linesCleared;
   }
 
   protected newGame(): void {

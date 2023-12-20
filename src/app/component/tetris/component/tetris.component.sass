@@ -6,14 +6,16 @@
 	> h2
 		padding-top: 2rem
 
+#game-next-piece
+	display: grid
+
 #game-gamestate-display
 	position: relative
 	display: flex
-	flex-direction: column
-	align-items: center
-	width: 282px
-	border-bottom: 1px solid rgb(211,211,211)
+	align-items: flex-start
 	height: 100%
+	gap: 2rem
+	padding-top: 1rem
 	
 	div > div
 		display: grid
@@ -42,7 +44,7 @@
 
 // TetrisPiece classes
 .PieceI
-	background: rgb(0, 183, 255)
+	background: #00b7ff
 
 .PieceJ
 	background: #2b5ed5
